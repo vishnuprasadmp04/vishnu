@@ -5,24 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Diary</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .movie-entry { margin-bottom: 10px; }
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #eef2f3; 
+            color: #333; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 20px; 
+            color: #4a4a4a; 
+        }
+        h2 { 
+            font-size: 1.5em; 
+            border-bottom: 2px solid #4a4a4a; 
+            padding-bottom: 10px; 
+            margin-top: 20px; 
+        }
+        .container { 
+            width: 90%; 
+            max-width: 600px; 
+            background: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+            padding: 20px; 
+            margin-bottom: 20px; 
+        }
+        input, textarea { 
+            width: calc(100% - 22px); 
+            padding: 10px; 
+            margin: 10px 0; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            transition: border 0.3s; 
+        }
+        input:focus, textarea:focus {
+            border-color: #28a745; 
+            outline: none; 
+        }
+        button { 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            padding: 10px 15px; 
+            cursor: pointer; 
+            font-size: 16px; 
+            transition: background-color 0.3s; 
+        }
+        button:hover { 
+            background-color: #218838; 
+        }
+        .movie-entry { 
+            background-color: #f9f9f9; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            transition: transform 0.2s; 
+        }
+        .movie-entry:hover { 
+            transform: scale(1.02); 
+        }
+        .delete-button { 
+            background-color: #dc3545; 
+            margin-left: 10px; 
+        }
+        .delete-button:hover { 
+            background-color: #c82333; 
+        }
+        @media (max-width: 600px) {
+            input, textarea, button { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
 <h1>Movie Diary</h1>
 
-<div>
+<div class="container">
     <h2>Add Movie</h2>
     <input type="text" id="title" placeholder="Movie Title" required>
     <input type="date" id="date_watched" required>
     <input type="number" id="rating" min="1" max="5" placeholder="Rating (1-5)" required>
-    <textarea id="notes" placeholder="Notes"></textarea>
+    <textarea id="notes" placeholder="Notes" rows="4"></textarea>
     <button onclick="addMovie()">Add Movie</button>
 </div>
 
-<div>
+<div class="container">
     <h2>Movies</h2>
     <input type="text" id="search" placeholder="Search by title" onkeyup="searchMovie()">
     <div id="movie-list"></div>
@@ -57,7 +132,7 @@
             movieList.innerHTML += `<div class="movie-entry">
                 <strong>${movie.title}</strong> (Watched on: ${movie.dateWatched}, Rating: ${movie.rating})<br>
                 Notes: ${movie.notes}
-                <button onclick="deleteMovie(${index})">Delete</button>
+                <button class="delete-button" onclick="deleteMovie(${index})">Delete</button>
             </div>`;
         });
     }
@@ -77,7 +152,7 @@
             movieList.innerHTML += `<div class="movie-entry">
                 <strong>${movie.title}</strong> (Watched on: ${movie.dateWatched}, Rating: ${movie.rating})<br>
                 Notes: ${movie.notes}
-                <button onclick="deleteMovie(${index})">Delete</button>
+                <button class="delete-button" onclick="deleteMovie(${index})">Delete</button>
             </div>`;
         });
     }
