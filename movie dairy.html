@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Diary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .movie-entry { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>Movie Diary</h1>
+
+<div>
+    <h2>Add Movie</h2>
+    <input type="text" id="title" placeholder="Movie Title" required>
+    <input type="date" id="date_watched" required>
+    <input type="number" id="rating" min="1" max="5" placeholder="Rating (1-5)" required>
+    <textarea id="notes" placeholder="Notes"></textarea>
+    <button onclick="addMovie()">Add Movie</button>
+</div>
+
+<div>
+    <h2>Movies</h2>
+    <input type="text" id="search" placeholder="Search by title" onkeyup="searchMovie()">
+    <div id="movie-list"></div>
+</div>
+
+<script>
+    let movies = [];
+
+    function addMovie() {
+        const title = document.getElementById('title').value;
+        const dateWatched = document.getElementById('date_watched').value;
+        const rating = document.getElementById('rating').value;
+        const notes = document.getElementById('notes').value;
+
+        const movie = { title, dateWatched, rating, notes };
+        movies.push(movie);
+        clearFields();
+        displayMovies();
+    }
+
+    function clearFields() {
+        document.getElementById('title').value = '';
+        document.getElementById('date_watched').value = '';
+        document.getElementById('rating').value = '';
+        document.getElementById('notes').value = '';
+    }
+
+    function displayMovies() {
+        const movieList = document.getElementById('movie-list');
+        movieList.innerHTML = '';
+        movies.forEach((movie, index) => {
+            movieList.innerHTML += `<div class="movie-entry">
+                <strong>${movie.title}</strong> (Watched on: ${movie.dateWatched}, Rating: ${movie.rating})<br>
+                Notes: ${movie.notes}
+                <button onclick="deleteMovie(${index})">Delete</button>
+            </div>`;
+        });
+    }
+
+    function deleteMovie(index) {
+        movies.splice(index, 1);
+        displayMovies();
+    }
+
+    function searchMovie() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query));
+        
+        const movieList = document.getElementById('movie-list');
+        movieList.innerHTML = '';
+        filteredMovies.forEach((movie, index) => {
+            movieList.innerHTML += `<div class="movie-entry">
+                <strong>${movie.title}</strong> (Watched on: ${movie.dateWatched}, Rating: ${movie.rating})<br>
+                Notes: ${movie.notes}
+                <button onclick="deleteMovie(${index})">Delete</button>
+            </div>`;
+        });
+    }
+</script>
+
+</body>
+</html>
